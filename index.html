@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/Gastel1730_nieuw_0.js"></script>
+        <script src="data/Wegen1730_nieuwcopy_1.js"></script>
+        <script src="data/water1730_nieuwcopy_2.js"></script>
+        <script src="data/Oudendijkcopy_3.js"></script>
+        <script src="data/NieuwGasteldijk1730_nieuwcopy_4.js"></script>
+        <script src="data/Grachten1730copy_5.js"></script>
+        <script src="data/Gebouwen1730copy_6.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[51.55565200192991,4.394065171430657],[51.61569456616992,4.587086146921611]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_Gastel1730_nieuw_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Perceelnr.</th>\
+                        <td>' + (feature.properties['Perceelnr.'] !== null ? autolinker.link(feature.properties['Perceelnr.'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Voornaam</th>\
+                        <td>' + (feature.properties['Voornaam'] !== null ? autolinker.link(feature.properties['Voornaam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Achternaam</th>\
+                        <td>' + (feature.properties['Achternaam'] !== null ? autolinker.link(feature.properties['Achternaam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Hoek</th>\
+                        <td>' + (feature.properties['Hoek'] !== null ? autolinker.link(feature.properties['Hoek'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Kleur'] !== null ? autolinker.link(feature.properties['Kleur'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Landmeter</th>\
+                        <td>' + (feature.properties['Landmeter'] !== null ? autolinker.link(feature.properties['Landmeter'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jaar</th>\
+                        <td>' + (feature.properties['Jaar'] !== null ? autolinker.link(feature.properties['Jaar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Gemeten</th>\
+                        <td>' + (feature.properties['Gemeten'] !== null ? autolinker.link(feature.properties['Gemeten'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Belasting</th>\
+                        <td>' + (feature.properties['Belasting'] !== null ? autolinker.link(feature.properties['Belasting'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Belasting2</th>\
+                        <td>' + (feature.properties['Belasting2'] !== null ? autolinker.link(feature.properties['Belasting2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Toponiem</th>\
+                        <td>' + (feature.properties['Toponiem'] !== null ? autolinker.link(feature.properties['Toponiem'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Stuyvers</th>\
+                        <td>' + (feature.properties['Stuyvers'] !== null ? autolinker.link(feature.properties['Stuyvers'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Geloof'] !== null ? autolinker.link(feature.properties['Geloof'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Van Steen?'] !== null ? autolinker.link(feature.properties['Van Steen?'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Wie'] !== null ? autolinker.link(feature.properties['Wie'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Cijns St.C'] !== null ? autolinker.link(feature.properties['Cijns St.C'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Gastel1730_nieuw_0_0(feature) {
+            switch(String(feature.properties['Kleur'])) {
+                case '1':
+                    return {
+                pane: 'pane_Gastel1730_nieuw_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(210,243,191,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_Gastel1730_nieuw_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(246,245,226,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_Gastel1730_nieuw_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(174,245,216,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_Gastel1730_nieuw_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,246,214,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '5':
+                    return {
+                pane: 'pane_Gastel1730_nieuw_0',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,251,245,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Gastel1730_nieuw_0');
+        map.getPane('pane_Gastel1730_nieuw_0').style.zIndex = 400;
+        map.getPane('pane_Gastel1730_nieuw_0').style['mix-blend-mode'] = 'normal';
+        var layer_Gastel1730_nieuw_0 = new L.geoJson(json_Gastel1730_nieuw_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Gastel1730_nieuw_0',
+            layerName: 'layer_Gastel1730_nieuw_0',
+            pane: 'pane_Gastel1730_nieuw_0',
+            onEachFeature: pop_Gastel1730_nieuw_0,
+            style: style_Gastel1730_nieuw_0_0,
+        });
+        bounds_group.addLayer(layer_Gastel1730_nieuw_0);
+        map.addLayer(layer_Gastel1730_nieuw_0);
+        function pop_Wegen1730_nieuwcopy_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">straatnaam</th>\
+                        <td>' + (feature.properties['straatnaam'] !== null ? autolinker.link(feature.properties['straatnaam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Wegen1730_nieuwcopy_1_0() {
+            return {
+                pane: 'pane_Wegen1730_nieuwcopy_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,201,154,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Wegen1730_nieuwcopy_1');
+        map.getPane('pane_Wegen1730_nieuwcopy_1').style.zIndex = 401;
+        map.getPane('pane_Wegen1730_nieuwcopy_1').style['mix-blend-mode'] = 'normal';
+        var layer_Wegen1730_nieuwcopy_1 = new L.geoJson(json_Wegen1730_nieuwcopy_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Wegen1730_nieuwcopy_1',
+            layerName: 'layer_Wegen1730_nieuwcopy_1',
+            pane: 'pane_Wegen1730_nieuwcopy_1',
+            onEachFeature: pop_Wegen1730_nieuwcopy_1,
+            style: style_Wegen1730_nieuwcopy_1_0,
+        });
+        bounds_group.addLayer(layer_Wegen1730_nieuwcopy_1);
+        map.addLayer(layer_Wegen1730_nieuwcopy_1);
+        function pop_water1730_nieuwcopy_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_water1730_nieuwcopy_2_0() {
+            return {
+                pane: 'pane_water1730_nieuwcopy_2',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(192,210,231,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_water1730_nieuwcopy_2');
+        map.getPane('pane_water1730_nieuwcopy_2').style.zIndex = 402;
+        map.getPane('pane_water1730_nieuwcopy_2').style['mix-blend-mode'] = 'normal';
+        var layer_water1730_nieuwcopy_2 = new L.geoJson(json_water1730_nieuwcopy_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_water1730_nieuwcopy_2',
+            layerName: 'layer_water1730_nieuwcopy_2',
+            pane: 'pane_water1730_nieuwcopy_2',
+            onEachFeature: pop_water1730_nieuwcopy_2,
+            style: style_water1730_nieuwcopy_2_0,
+        });
+        bounds_group.addLayer(layer_water1730_nieuwcopy_2);
+        map.addLayer(layer_water1730_nieuwcopy_2);
+        function pop_Oudendijkcopy_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Naam'] !== null ? autolinker.link(feature.properties['Naam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Oudendijkcopy_3_0() {
+            return {
+                pane: 'pane_Oudendijkcopy_3',
+                opacity: 1,
+                color: 'rgba(61,171,126,1.0)',
+                dashArray: '10,5',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Oudendijkcopy_3');
+        map.getPane('pane_Oudendijkcopy_3').style.zIndex = 403;
+        map.getPane('pane_Oudendijkcopy_3').style['mix-blend-mode'] = 'normal';
+        var layer_Oudendijkcopy_3 = new L.geoJson(json_Oudendijkcopy_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Oudendijkcopy_3',
+            layerName: 'layer_Oudendijkcopy_3',
+            pane: 'pane_Oudendijkcopy_3',
+            onEachFeature: pop_Oudendijkcopy_3,
+            style: style_Oudendijkcopy_3_0,
+        });
+        bounds_group.addLayer(layer_Oudendijkcopy_3);
+        map.addLayer(layer_Oudendijkcopy_3);
+        function pop_NieuwGasteldijk1730_nieuwcopy_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_NieuwGasteldijk1730_nieuwcopy_4_0() {
+            return {
+                pane: 'pane_NieuwGasteldijk1730_nieuwcopy_4',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(164,113,88,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_NieuwGasteldijk1730_nieuwcopy_4');
+        map.getPane('pane_NieuwGasteldijk1730_nieuwcopy_4').style.zIndex = 404;
+        map.getPane('pane_NieuwGasteldijk1730_nieuwcopy_4').style['mix-blend-mode'] = 'normal';
+        var layer_NieuwGasteldijk1730_nieuwcopy_4 = new L.geoJson(json_NieuwGasteldijk1730_nieuwcopy_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_NieuwGasteldijk1730_nieuwcopy_4',
+            layerName: 'layer_NieuwGasteldijk1730_nieuwcopy_4',
+            pane: 'pane_NieuwGasteldijk1730_nieuwcopy_4',
+            onEachFeature: pop_NieuwGasteldijk1730_nieuwcopy_4,
+            style: style_NieuwGasteldijk1730_nieuwcopy_4_0,
+        });
+        bounds_group.addLayer(layer_NieuwGasteldijk1730_nieuwcopy_4);
+        map.addLayer(layer_NieuwGasteldijk1730_nieuwcopy_4);
+        function pop_Grachten1730copy_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Grachten1730copy_5_0() {
+            return {
+                pane: 'pane_Grachten1730copy_5',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(165,191,221,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Grachten1730copy_5');
+        map.getPane('pane_Grachten1730copy_5').style.zIndex = 405;
+        map.getPane('pane_Grachten1730copy_5').style['mix-blend-mode'] = 'normal';
+        var layer_Grachten1730copy_5 = new L.geoJson(json_Grachten1730copy_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Grachten1730copy_5',
+            layerName: 'layer_Grachten1730copy_5',
+            pane: 'pane_Grachten1730copy_5',
+            onEachFeature: pop_Grachten1730copy_5,
+            style: style_Grachten1730copy_5_0,
+        });
+        bounds_group.addLayer(layer_Grachten1730copy_5);
+        map.addLayer(layer_Grachten1730copy_5);
+        function pop_Gebouwen1730copy_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Gebouwen1730copy_6_0() {
+            return {
+                pane: 'pane_Gebouwen1730copy_6',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(227,153,142,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Gebouwen1730copy_6');
+        map.getPane('pane_Gebouwen1730copy_6').style.zIndex = 406;
+        map.getPane('pane_Gebouwen1730copy_6').style['mix-blend-mode'] = 'normal';
+        var layer_Gebouwen1730copy_6 = new L.geoJson(json_Gebouwen1730copy_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Gebouwen1730copy_6',
+            layerName: 'layer_Gebouwen1730copy_6',
+            pane: 'pane_Gebouwen1730copy_6',
+            onEachFeature: pop_Gebouwen1730copy_6,
+            style: style_Gebouwen1730copy_6_0,
+        });
+        bounds_group.addLayer(layer_Gebouwen1730copy_6);
+        map.addLayer(layer_Gebouwen1730copy_6);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Gebouwen1730copy_6.png" /> Gebouwen 1730 copy': layer_Gebouwen1730copy_6,'<img src="legend/Grachten1730copy_5.png" /> Grachten 1730 copy': layer_Grachten1730copy_5,'<img src="legend/NieuwGasteldijk1730_nieuwcopy_4.png" /> Nieuw Gastel dijk 1730_nieuw copy': layer_NieuwGasteldijk1730_nieuwcopy_4,'<img src="legend/Oudendijkcopy_3.png" /> Oudendijk copy': layer_Oudendijkcopy_3,'<img src="legend/water1730_nieuwcopy_2.png" /> water 1730_nieuw copy': layer_water1730_nieuwcopy_2,'<img src="legend/Wegen1730_nieuwcopy_1.png" /> Wegen 1730_nieuw copy': layer_Wegen1730_nieuwcopy_1,'Gastel 1730_nieuw<br /><table><tr><td style="text-align: center;"><img src="legend/Gastel1730_nieuw_0_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/Gastel1730_nieuw_0_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/Gastel1730_nieuw_0_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/Gastel1730_nieuw_0_43.png" /></td><td>4</td></tr><tr><td style="text-align: center;"><img src="legend/Gastel1730_nieuw_0_54.png" /></td><td>5</td></tr></table>': layer_Gastel1730_nieuw_0,}).addTo(map);
+        map.on("zoomend", function(){
+
+                if (map.hasLayer(layer_Wegen1730_nieuwcopy_1)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_Wegen1730_nieuwcopy_1.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Wegen1730_nieuwcopy_1.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        });
+        setBounds();
+                if (map.hasLayer(layer_Wegen1730_nieuwcopy_1)) {
+                    if (map.getZoom() <= 14 && map.getZoom() >= 19) {
+                        layer_Wegen1730_nieuwcopy_1.eachLayer(function (layer) {
+                            layer.openTooltip();
+                        });
+                    } else {
+                        layer_Wegen1730_nieuwcopy_1.eachLayer(function (layer) {
+                            layer.closeTooltip();
+                        });
+                    }
+                }
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"Achternaam": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Achternaam = document.createElement('div');
+            div_Achternaam.id = "div_Achternaam";
+            div_Achternaam.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Achternaam);
+            sel_Achternaam = document.createElement('select');
+            sel_Achternaam.multiple = true;
+            sel_Achternaam.size = 10;
+            sel_Achternaam.id = "sel_Achternaam";
+            var Achternaam_options_str = "<option value='' unselected></option>";
+            sel_Achternaam.onchange = function(){filterFunc()};
+            Achternaam_options_str  += '<option value="NULL">NULL</option>';
+            Achternaam_options_str  += '<option value="Aarnouts">Aarnouts</option>';
+            Achternaam_options_str  += '<option value="Aartzen weduwe">Aartzen weduwe</option>';
+            Achternaam_options_str  += '<option value="Abdij van Sint Bernards">Abdij van Sint Bernards</option>';
+            Achternaam_options_str  += '<option value="Adams">Adams</option>';
+            Achternaam_options_str  += '<option value="Adriaensen erfgenamen">Adriaensen erfgenamen</option>';
+            Achternaam_options_str  += '<option value="Aernout, Burgers">Aernout, Burgers</option>';
+            Achternaam_options_str  += '<option value="Akkermans">Akkermans</option>';
+            Achternaam_options_str  += '<option value="Akkermans, Jan">Akkermans, Jan</option>';
+            Achternaam_options_str  += '<option value="Andriessen weduwe">Andriessen weduwe</option>';
+            Achternaam_options_str  += '<option value="Armen van Oud Gastel">Armen van Oud Gastel</option>';
+            Achternaam_options_str  += '<option value="Armen van Oudenbosch">Armen van Oudenbosch</option>';
+            Achternaam_options_str  += '<option value="Armen van Roosendaal">Armen van Roosendaal</option>';
+            Achternaam_options_str  += '<option value="Armen van Zegge">Armen van Zegge</option>';
+            Achternaam_options_str  += '<option value="Beckaff weduwe">Beckaff weduwe</option>';
+            Achternaam_options_str  += '<option value="Beckaff, Godelieff Maria">Beckaff, Godelieff Maria</option>';
+            Achternaam_options_str  += '<option value="Beckaff, Michiel">Beckaff, Michiel</option>';
+            Achternaam_options_str  += '<option value="Becude">Becude</option>';
+            Achternaam_options_str  += '<option value="Beetinx">Beetinx</option>';
+            Achternaam_options_str  += '<option value="Biersteekers">Biersteekers</option>';
+            Achternaam_options_str  += '<option value="Biersteekers weduwe">Biersteekers weduwe</option>';
+            Achternaam_options_str  += '<option value="Bijl">Bijl</option>';
+            Achternaam_options_str  += '<option value="Blankers">Blankers</option>';
+            Achternaam_options_str  += '<option value="Bloos">Bloos</option>';
+            Achternaam_options_str  += '<option value="Bloos, Jacobus">Bloos, Jacobus</option>';
+            Achternaam_options_str  += '<option value="Boers">Boers</option>';
+            Achternaam_options_str  += '<option value="Braat weduwe">Braat weduwe</option>';
+            Achternaam_options_str  += '<option value="Brakko">Brakko</option>';
+            Achternaam_options_str  += '<option value="Brassaard">Brassaard</option>';
+            Achternaam_options_str  += '<option value="Breeuws">Breeuws</option>';
+            Achternaam_options_str  += '<option value="Bukkens">Bukkens</option>';
+            Achternaam_options_str  += '<option value="Bukkens weduwe">Bukkens weduwe</option>';
+            Achternaam_options_str  += '<option value="Burgers">Burgers</option>';
+            Achternaam_options_str  += '<option value="Buyks">Buyks</option>';
+            Achternaam_options_str  += '<option value="Capoen, Aart">Capoen, Aart</option>';
+            Achternaam_options_str  += '<option value="Capoen, Mattheus">Capoen, Mattheus</option>';
+            Achternaam_options_str  += '<option value="Coenot">Coenot</option>';
+            Achternaam_options_str  += '<option value="Coerts">Coerts</option>';
+            Achternaam_options_str  += '<option value="Coevoets">Coevoets</option>';
+            Achternaam_options_str  += '<option value="Coevoets weduwe">Coevoets weduwe</option>';
+            Achternaam_options_str  += '<option value="Coopmans">Coopmans</option>';
+            Achternaam_options_str  += '<option value="Coopmans, Migiel">Coopmans, Migiel</option>';
+            Achternaam_options_str  += '<option value="Corsmit">Corsmit</option>';
+            Achternaam_options_str  += '<option value="Corsmit, Willem Claassen">Corsmit, Willem Claassen</option>';
+            Achternaam_options_str  += '<option value="Corsmit, Willem Jansse">Corsmit, Willem Jansse</option>';
+            Achternaam_options_str  += '<option value="Craemers">Craemers</option>';
+            Achternaam_options_str  += '<option value="Crijnen">Crijnen</option>';
+            Achternaam_options_str  += '<option value="Cuijpers, Coenraed">Cuijpers, Coenraed</option>';
+            Achternaam_options_str  += '<option value="Cuyper weduwe">Cuyper weduwe</option>';
+            Achternaam_options_str  += '<option value="Dam weduwe">Dam weduwe</option>';
+            Achternaam_options_str  += '<option value="Dam weduwe, Adriaan">Dam weduwe, Adriaan</option>';
+            Achternaam_options_str  += '<option value="Dam, Cornelis">Dam, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Dam, Nicolaas">Dam, Nicolaas</option>';
+            Achternaam_options_str  += '<option value="Danen">Danen</option>';
+            Achternaam_options_str  += '<option value="Daniels, Heymans, Corsmit">Daniels, Heymans, Corsmit</option>';
+            Achternaam_options_str  += '<option value="De weezen van den Oudenbosch">De weezen van den Oudenbosch</option>';
+            Achternaam_options_str  += '<option value="Deenissen">Deenissen</option>';
+            Achternaam_options_str  += '<option value="Dekkers">Dekkers</option>';
+            Achternaam_options_str  += '<option value="Dekkers weduwe">Dekkers weduwe</option>';
+            Achternaam_options_str  += '<option value="Dekkers, Cornelis">Dekkers, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Dekkers, Nicolaas">Dekkers, Nicolaas</option>';
+            Achternaam_options_str  += '<option value="Dielen">Dielen</option>';
+            Achternaam_options_str  += '<option value="Dielen weduwe">Dielen weduwe</option>';
+            Achternaam_options_str  += '<option value="Elzakker">Elzakker</option>';
+            Achternaam_options_str  += '<option value="Elzakker, Johannis">Elzakker, Johannis</option>';
+            Achternaam_options_str  += '<option value="Everden">Everden</option>';
+            Achternaam_options_str  += '<option value="Everden, Cornelis">Everden, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Everden, Jacobus">Everden, Jacobus</option>';
+            Achternaam_options_str  += '<option value="Everden, Maria">Everden, Maria</option>';
+            Achternaam_options_str  += '<option value="Everden, Pieter">Everden, Pieter</option>';
+            Achternaam_options_str  += '<option value="Eygenaars">Eygenaars</option>';
+            Achternaam_options_str  += '<option value="Fiers">Fiers</option>';
+            Achternaam_options_str  += '<option value="Filipzen">Filipzen</option>';
+            Achternaam_options_str  += '<option value="Franken weduwe">Franken weduwe</option>';
+            Achternaam_options_str  += '<option value="Friscus">Friscus</option>';
+            Achternaam_options_str  += '<option value="Giele">Giele</option>';
+            Achternaam_options_str  += '<option value="Gielen">Gielen</option>';
+            Achternaam_options_str  += '<option value="Gommeren">Gommeren</option>';
+            Achternaam_options_str  += '<option value="Gulden">Gulden</option>';
+            Achternaam_options_str  += '<option value="Haagenaars weduwe">Haagenaars weduwe</option>';
+            Achternaam_options_str  += '<option value="Haagenaars, Jan">Haagenaars, Jan</option>';
+            Achternaam_options_str  += '<option value="Haagens">Haagens</option>';
+            Achternaam_options_str  += '<option value="Haagens, Bloos">Haagens, Bloos</option>';
+            Achternaam_options_str  += '<option value="Haagens, Cornelis">Haagens, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Haagens, Dirck">Haagens, Dirck</option>';
+            Achternaam_options_str  += '<option value="Haagens, Thomas">Haagens, Thomas</option>';
+            Achternaam_options_str  += '<option value="Haast, Adriaan">Haast, Adriaan</option>';
+            Achternaam_options_str  += '<option value="Haast, Cornelis">Haast, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Halfvat">Halfvat</option>';
+            Achternaam_options_str  += '<option value="Handboog, Bus en Cruys Boog Doelen">Handboog, Bus en Cruys Boog Doelen</option>';
+            Achternaam_options_str  += '<option value="Heestermans">Heestermans</option>';
+            Achternaam_options_str  += '<option value="Heestermans, Cornelis">Heestermans, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Heestermans, Jan">Heestermans, Jan</option>';
+            Achternaam_options_str  += '<option value="Hertog">Hertog</option>';
+            Achternaam_options_str  += '<option value="Holswilders">Holswilders</option>';
+            Achternaam_options_str  += '<option value="Hootsmans, Anthonetta">Hootsmans, Anthonetta</option>';
+            Achternaam_options_str  += '<option value="Hootsmans, Jan">Hootsmans, Jan</option>';
+            Achternaam_options_str  += '<option value="Hootsmans, Johan">Hootsmans, Johan</option>';
+            Achternaam_options_str  += '<option value="Horrans">Horrans</option>';
+            Achternaam_options_str  += '<option value="Houtepen">Houtepen</option>';
+            Achternaam_options_str  += '<option value="Huygens">Huygens</option>';
+            Achternaam_options_str  += '<option value="Huygens, Marijnis">Huygens, Marijnis</option>';
+            Achternaam_options_str  += '<option value="Huymans">Huymans</option>';
+            Achternaam_options_str  += '<option value="Huysmans">Huysmans</option>';
+            Achternaam_options_str  += '<option value="Huyze van Bergen">Huyze van Bergen</option>';
+            Achternaam_options_str  += '<option value="Ingelanden">Ingelanden</option>';
+            Achternaam_options_str  += '<option value="Jaagers">Jaagers</option>';
+            Achternaam_options_str  += '<option value="Jongeneelen">Jongeneelen</option>';
+            Achternaam_options_str  += '<option value="Jooren">Jooren</option>';
+            Achternaam_options_str  += '<option value="Jordaans weduwe">Jordaans weduwe</option>';
+            Achternaam_options_str  += '<option value="Jorissen">Jorissen</option>';
+            Achternaam_options_str  += '<option value="Keetmans">Keetmans</option>';
+            Achternaam_options_str  += '<option value="Keldermans">Keldermans</option>';
+            Achternaam_options_str  += '<option value="Keldermans weduwe, Adriaan">Keldermans weduwe, Adriaan</option>';
+            Achternaam_options_str  += '<option value="Kerk van Oud Gastel">Kerk van Oud Gastel</option>';
+            Achternaam_options_str  += '<option value="Kerk van Oudenbosch">Kerk van Oudenbosch</option>';
+            Achternaam_options_str  += '<option value="Kerkhof en kerkgrond">Kerkhof en kerkgrond</option>';
+            Achternaam_options_str  += '<option value="Kerstens">Kerstens</option>';
+            Achternaam_options_str  += '<option value="Koonings">Koonings</option>';
+            Achternaam_options_str  += '<option value="Koonings, Paulus">Koonings, Paulus</option>';
+            Achternaam_options_str  += '<option value="Laats">Laats</option>';
+            Achternaam_options_str  += '<option value="Laats, Cornelis en Catrina">Laats, Cornelis en Catrina</option>';
+            Achternaam_options_str  += '<option value="Landmeeters">Landmeeters</option>';
+            Achternaam_options_str  += '<option value="Lazarums">Lazarums</option>';
+            Achternaam_options_str  += '<option value="Lazarums, Anthony en Zoetjen">Lazarums, Anthony en Zoetjen</option>';
+            Achternaam_options_str  += '<option value="Lazarums, Jan">Lazarums, Jan</option>';
+            Achternaam_options_str  += '<option value="Lips">Lips</option>';
+            Achternaam_options_str  += '<option value="Loijen">Loijen</option>';
+            Achternaam_options_str  += '<option value="Loyen">Loyen</option>';
+            Achternaam_options_str  += '<option value="Luyx">Luyx</option>';
+            Achternaam_options_str  += '<option value="Luyx weduwe">Luyx weduwe</option>';
+            Achternaam_options_str  += '<option value="Luyx, Pieternella">Luyx, Pieternella</option>';
+            Achternaam_options_str  += '<option value="Maas">Maas</option>';
+            Achternaam_options_str  += '<option value="Maetjens">Maetjens</option>';
+            Achternaam_options_str  += '<option value="Mangelaer">Mangelaer</option>';
+            Achternaam_options_str  += '<option value="Mangelaer weduwe">Mangelaer weduwe</option>';
+            Achternaam_options_str  += '<option value="Marquis">Marquis</option>';
+            Achternaam_options_str  += '<option value="Martelmans">Martelmans</option>';
+            Achternaam_options_str  += '<option value="Matthijssen">Matthijssen</option>';
+            Achternaam_options_str  += '<option value="Meesters, Christoffel">Meesters, Christoffel</option>';
+            Achternaam_options_str  += '<option value="Meesters, Derk">Meesters, Derk</option>';
+            Achternaam_options_str  += '<option value="Meeussen">Meeussen</option>';
+            Achternaam_options_str  += '<option value="Mesch">Mesch</option>';
+            Achternaam_options_str  += '<option value="Mies, Cornelis">Mies, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Mies, Jacobus en Cornelis">Mies, Jacobus en Cornelis</option>';
+            Achternaam_options_str  += '<option value="Mies, Steven">Mies, Steven</option>';
+            Achternaam_options_str  += '<option value="Moerinx">Moerinx</option>';
+            Achternaam_options_str  += '<option value="Moermans, Geert">Moermans, Geert</option>';
+            Achternaam_options_str  += '<option value="Mol">Mol</option>';
+            Achternaam_options_str  += '<option value="Molenberg">Molenberg</option>';
+            Achternaam_options_str  += '<option value="Moolengraaf">Moolengraaf</option>';
+            Achternaam_options_str  += '<option value="Mosselmans, Catarina">Mosselmans, Catarina</option>';
+            Achternaam_options_str  += '<option value="Mosselmans, Cornelia">Mosselmans, Cornelia</option>';
+            Achternaam_options_str  += '<option value="Mosselmans, Johanna">Mosselmans, Johanna</option>';
+            Achternaam_options_str  += '<option value="Mouw weduwe, Hendrik">Mouw weduwe, Hendrik</option>';
+            Achternaam_options_str  += '<option value="Mouwen weduwe">Mouwen weduwe</option>';
+            Achternaam_options_str  += '<option value="Mouwen, Johan">Mouwen, Johan</option>';
+            Achternaam_options_str  += '<option value="Nellen">Nellen</option>';
+            Achternaam_options_str  += '<option value="Nicolaassen Luyx weduwe">Nicolaassen Luyx weduwe</option>';
+            Achternaam_options_str  += '<option value="Nicolaassen Luyx, Hendrik">Nicolaassen Luyx, Hendrik</option>';
+            Achternaam_options_str  += '<option value="Nicolaassen Luyx, Jan">Nicolaassen Luyx, Jan</option>';
+            Achternaam_options_str  += '<option value="Nicolaassen Luyx, Johan">Nicolaassen Luyx, Johan</option>';
+            Achternaam_options_str  += '<option value="Nicolaassen Luyx, kinderen">Nicolaassen Luyx, kinderen</option>';
+            Achternaam_options_str  += '<option value="Noorden">Noorden</option>';
+            Achternaam_options_str  += '<option value="Nouten">Nouten</option>';
+            Achternaam_options_str  += '<option value="Nouten, Cornelis">Nouten, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Otgens">Otgens</option>';
+            Achternaam_options_str  += '<option value="Otgens weduwe, Joris">Otgens weduwe, Joris</option>';
+            Achternaam_options_str  += '<option value="Otgens, Adrianus">Otgens, Adrianus</option>';
+            Achternaam_options_str  += '<option value="Otgens, Anthony">Otgens, Anthony</option>';
+            Achternaam_options_str  += '<option value="Otgens, Louis">Otgens, Louis</option>';
+            Achternaam_options_str  += '<option value="Otgens, Petrus">Otgens, Petrus</option>';
+            Achternaam_options_str  += '<option value="Oude manhuijs tot Dordrecht">Oude manhuijs tot Dordrecht</option>';
+            Achternaam_options_str  += '<option value="Paanen">Paanen</option>';
+            Achternaam_options_str  += '<option value="Paanen, Cornelis">Paanen, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Paanis">Paanis</option>';
+            Achternaam_options_str  += '<option value="Par">Par</option>';
+            Achternaam_options_str  += '<option value="Perdaans">Perdaans</option>';
+            Achternaam_options_str  += '<option value="Philipzen">Philipzen</option>';
+            Achternaam_options_str  += '<option value="Pietersen">Pietersen</option>';
+            Achternaam_options_str  += '<option value="Pijpers">Pijpers</option>';
+            Achternaam_options_str  += '<option value="Pot">Pot</option>';
+            Achternaam_options_str  += '<option value="Pronk">Pronk</option>';
+            Achternaam_options_str  += '<option value="Proost">Proost</option>';
+            Achternaam_options_str  += '<option value="Proost van Ligtaerd">Proost van Ligtaerd</option>';
+            Achternaam_options_str  += '<option value="Proost, Guilliam">Proost, Guilliam</option>';
+            Achternaam_options_str  += '<option value="Proost, Hendrik">Proost, Hendrik</option>';
+            Achternaam_options_str  += '<option value="Pruymboom">Pruymboom</option>';
+            Achternaam_options_str  += '<option value="Quakkelaars">Quakkelaars</option>';
+            Achternaam_options_str  += '<option value="Ram">Ram</option>';
+            Achternaam_options_str  += '<option value="Reijns">Reijns</option>';
+            Achternaam_options_str  += '<option value="Respanny">Respanny</option>';
+            Achternaam_options_str  += '<option value="Respanny, Charles">Respanny, Charles</option>';
+            Achternaam_options_str  += '<option value="Reynders">Reynders</option>';
+            Achternaam_options_str  += '<option value="Rijken">Rijken</option>';
+            Achternaam_options_str  += '<option value="Rijpers">Rijpers</option>';
+            Achternaam_options_str  += '<option value="Roeken">Roeken</option>';
+            Achternaam_options_str  += '<option value="Roesell">Roesell</option>';
+            Achternaam_options_str  += '<option value="Rommens, Catrina en Cornelia">Rommens, Catrina en Cornelia</option>';
+            Achternaam_options_str  += '<option value="Rooken">Rooken</option>';
+            Achternaam_options_str  += '<option value="Rooks">Rooks</option>';
+            Achternaam_options_str  += '<option value="Rooms Catholieke gemeente">Rooms Catholieke gemeente</option>';
+            Achternaam_options_str  += '<option value="Roovers">Roovers</option>';
+            Achternaam_options_str  += '<option value="Roozen">Roozen</option>';
+            Achternaam_options_str  += '<option value="Roozen, Adriaan">Roozen, Adriaan</option>';
+            Achternaam_options_str  += '<option value="Rubens">Rubens</option>';
+            Achternaam_options_str  += '<option value="Ruymers">Ruymers</option>';
+            Achternaam_options_str  += '<option value="Schaap">Schaap</option>';
+            Achternaam_options_str  += '<option value="Schilmans weduwe">Schilmans weduwe</option>';
+            Achternaam_options_str  += '<option value="School">School</option>';
+            Achternaam_options_str  += '<option value="Schouw">Schouw</option>';
+            Achternaam_options_str  += '<option value="Schouw, Hendrik">Schouw, Hendrik</option>';
+            Achternaam_options_str  += '<option value="Sint Elisabeth Gasthuys te Bergen op Zoom">Sint Elisabeth Gasthuys te Bergen op Zoom</option>';
+            Achternaam_options_str  += '<option value="Smits weduwe">Smits weduwe</option>';
+            Achternaam_options_str  += '<option value="Smits, Niclaes Sijmonse">Smits, Niclaes Sijmonse</option>';
+            Achternaam_options_str  += '<option value="Snellen">Snellen</option>';
+            Achternaam_options_str  += '<option value="Sprangers">Sprangers</option>';
+            Achternaam_options_str  += '<option value="Sprong">Sprong</option>';
+            Achternaam_options_str  += '<option value="Staakenburg">Staakenburg</option>';
+            Achternaam_options_str  += '<option value="Steevens">Steevens</option>';
+            Achternaam_options_str  += '<option value="Stillemans weduwe">Stillemans weduwe</option>';
+            Achternaam_options_str  += '<option value="Stommens">Stommens</option>';
+            Achternaam_options_str  += '<option value="Struys">Struys</option>';
+            Achternaam_options_str  += '<option value="Swrijters">Swrijters</option>';
+            Achternaam_options_str  += '<option value="T Kint">T Kint</option>';
+            Achternaam_options_str  += '<option value="Tak">Tak</option>';
+            Achternaam_options_str  += '<option value="Tak weduwe">Tak weduwe</option>';
+            Achternaam_options_str  += '<option value="Tak, Maerten Pietersen">Tak, Maerten Pietersen</option>';
+            Achternaam_options_str  += '<option value="Tiboel">Tiboel</option>';
+            Achternaam_options_str  += '<option value="Timmers">Timmers</option>';
+            Achternaam_options_str  += '<option value="Trouw weduwe">Trouw weduwe</option>';
+            Achternaam_options_str  += '<option value="Tulleken">Tulleken</option>';
+            Achternaam_options_str  += '<option value="Veraard weduwe">Veraard weduwe</option>';
+            Achternaam_options_str  += '<option value="Verband weduwe">Verband weduwe</option>';
+            Achternaam_options_str  += '<option value="Verbregt">Verbregt</option>';
+            Achternaam_options_str  += '<option value="Vereyk">Vereyk</option>';
+            Achternaam_options_str  += '<option value="Verhoeve">Verhoeve</option>';
+            Achternaam_options_str  += '<option value="Verhulst">Verhulst</option>';
+            Achternaam_options_str  += '<option value="Verkouteren">Verkouteren</option>';
+            Achternaam_options_str  += '<option value="Vermaer">Vermaer</option>';
+            Achternaam_options_str  += '<option value="Vermeulen">Vermeulen</option>';
+            Achternaam_options_str  += '<option value="Vermeulen, Adriaan Willemse">Vermeulen, Adriaan Willemse</option>';
+            Achternaam_options_str  += '<option value="Vermeulen, Johan">Vermeulen, Johan</option>';
+            Achternaam_options_str  += '<option value="Verschel weduwe">Verschel weduwe</option>';
+            Achternaam_options_str  += '<option value="Vervloet">Vervloet</option>';
+            Achternaam_options_str  += '<option value="Vierschaar en dependentie">Vierschaar en dependentie</option>';
+            Achternaam_options_str  += '<option value="Virends">Virends</option>';
+            Achternaam_options_str  += '<option value="Voogden">Voogden</option>';
+            Achternaam_options_str  += '<option value="Voogden, Cornelis">Voogden, Cornelis</option>';
+            Achternaam_options_str  += '<option value="Vos">Vos</option>';
+            Achternaam_options_str  += '<option value="Vos, Dirck">Vos, Dirck</option>';
+            Achternaam_options_str  += '<option value="Vrinds">Vrinds</option>';
+            Achternaam_options_str  += '<option value="Vrinds, Mattijs">Vrinds, Mattijs</option>';
+            Achternaam_options_str  += '<option value="Wijngaerts">Wijngaerts</option>';
+            Achternaam_options_str  += '<option value="Woutas">Woutas</option>';
+            Achternaam_options_str  += '<option value="Woutas, Frans">Woutas, Frans</option>';
+            Achternaam_options_str  += '<option value="Zebregts">Zebregts</option>';
+            Achternaam_options_str  += '<option value="Zeegers">Zeegers</option>';
+            Achternaam_options_str  += '<option value="Zeegers, Antonij">Zeegers, Antonij</option>';
+            Achternaam_options_str  += '<option value="Zeegers, Hendrik">Zeegers, Hendrik</option>';
+            Achternaam_options_str  += '<option value="Zeegers, Jan">Zeegers, Jan</option>';
+            Achternaam_options_str  += '<option value="Zwaans weduwe">Zwaans weduwe</option>';
+            Achternaam_options_str  += '<option value="Zwaans, Adriaan">Zwaans, Adriaan</option>';
+            Achternaam_options_str  += '<option value="Zwart weduwe">Zwart weduwe</option>';
+            Achternaam_options_str  += '<option value="de Bakker">de Bakker</option>';
+            Achternaam_options_str  += '<option value="de Bakker, Cornelis">de Bakker, Cornelis</option>';
+            Achternaam_options_str  += '<option value="de Bies weduwe">de Bies weduwe</option>';
+            Achternaam_options_str  += '<option value="de Bruijn, Bastiaen">de Bruijn, Bastiaen</option>';
+            Achternaam_options_str  += '<option value="de Ceulenaer">de Ceulenaer</option>';
+            Achternaam_options_str  += '<option value="de Graauw">de Graauw</option>';
+            Achternaam_options_str  += '<option value="de Graauw, Jacobus en Tona">de Graauw, Jacobus en Tona</option>';
+            Achternaam_options_str  += '<option value="de Groen">de Groen</option>';
+            Achternaam_options_str  += '<option value="de Hairde">de Hairde</option>';
+            Achternaam_options_str  += '<option value="de Hamer">de Hamer</option>';
+            Achternaam_options_str  += '<option value="de Jong weduwe">de Jong weduwe</option>';
+            Achternaam_options_str  += '<option value="de Jonge">de Jonge</option>';
+            Achternaam_options_str  += '<option value="de Kaater weduwe">de Kaater weduwe</option>';
+            Achternaam_options_str  += '<option value="de Keyzer">de Keyzer</option>';
+            Achternaam_options_str  += '<option value="de Kleyn">de Kleyn</option>';
+            Achternaam_options_str  += '<option value="de Kooning">de Kooning</option>';
+            Achternaam_options_str  += '<option value="de Kooning weduwe">de Kooning weduwe</option>';
+            Achternaam_options_str  += '<option value="de Mans">de Mans</option>';
+            Achternaam_options_str  += '<option value="de Moor">de Moor</option>';
+            Achternaam_options_str  += '<option value="de Nel">de Nel</option>';
+            Achternaam_options_str  += '<option value="de Pottere">de Pottere</option>';
+            Achternaam_options_str  += '<option value="de Pottere, Johanna Maria">de Pottere, Johanna Maria</option>';
+            Achternaam_options_str  += '<option value="de Pottere, Lodewijck">de Pottere, Lodewijck</option>';
+            Achternaam_options_str  += '<option value="de Ram">de Ram</option>';
+            Achternaam_options_str  += '<option value="de Rooij">de Rooij</option>';
+            Achternaam_options_str  += '<option value="de Stembor, Theodoor">de Stembor, Theodoor</option>';
+            Achternaam_options_str  += '<option value="de Stembor, Willem">de Stembor, Willem</option>';
+            Achternaam_options_str  += '<option value="de Vetter">de Vetter</option>';
+            Achternaam_options_str  += '<option value="de Vries">de Vries</option>';
+            Achternaam_options_str  += '<option value="de Vroom">de Vroom</option>';
+            Achternaam_options_str  += '<option value="de Waal">de Waal</option>';
+            Achternaam_options_str  += '<option value="de Winter">de Winter</option>';
+            Achternaam_options_str  += '<option value="de Witte">de Witte</option>';
+            Achternaam_options_str  += '<option value="ten Hage">ten Hage</option>';
+            Achternaam_options_str  += '<option value="ten Hage, Jan">ten Hage, Jan</option>';
+            Achternaam_options_str  += '<option value="van Aartsen">van Aartsen</option>';
+            Achternaam_options_str  += '<option value="van Alphen">van Alphen</option>';
+            Achternaam_options_str  += '<option value="van As">van As</option>';
+            Achternaam_options_str  += '<option value="van Baarle">van Baarle</option>';
+            Achternaam_options_str  += '<option value="van Beek">van Beek</option>';
+            Achternaam_options_str  += '<option value="van Beek, Cornelia Adriana">van Beek, Cornelia Adriana</option>';
+            Achternaam_options_str  += '<option value="van Beeveren">van Beeveren</option>';
+            Achternaam_options_str  += '<option value="van Blerk">van Blerk</option>';
+            Achternaam_options_str  += '<option value="van Boerbergen">van Boerbergen</option>';
+            Achternaam_options_str  += '<option value="van Bosheyden">van Bosheyden</option>';
+            Achternaam_options_str  += '<option value="van Bosheyden, Anthonetta">van Bosheyden, Anthonetta</option>';
+            Achternaam_options_str  += '<option value="van Bosheyden, Coenraed">van Bosheyden, Coenraed</option>';
+            Achternaam_options_str  += '<option value="van Bosheyden, Migiel">van Bosheyden, Migiel</option>';
+            Achternaam_options_str  += '<option value="van Bragt">van Bragt</option>';
+            Achternaam_options_str  += '<option value="van Breda">van Breda</option>';
+            Achternaam_options_str  += '<option value="van Bree kinderen">van Bree kinderen</option>';
+            Achternaam_options_str  += '<option value="van Buyten">van Buyten</option>';
+            Achternaam_options_str  += '<option value="van Campenhout">van Campenhout</option>';
+            Achternaam_options_str  += '<option value="van Cauwegom">van Cauwegom</option>';
+            Achternaam_options_str  += '<option value="van Diepenbeek">van Diepenbeek</option>';
+            Achternaam_options_str  += '<option value="van Diepenbeek, Stephanus">van Diepenbeek, Stephanus</option>';
+            Achternaam_options_str  += '<option value="van Dongen weduwe, Aart">van Dongen weduwe, Aart</option>';
+            Achternaam_options_str  += '<option value="van Dongen, Bastiaen">van Dongen, Bastiaen</option>';
+            Achternaam_options_str  += '<option value="van Dongen, Cornelis">van Dongen, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van Dooren">van Dooren</option>';
+            Achternaam_options_str  += '<option value="van Dooren, Corstiaan">van Dooren, Corstiaan</option>';
+            Achternaam_options_str  += '<option value="van Doorn, Bartelomeus">van Doorn, Bartelomeus</option>';
+            Achternaam_options_str  += '<option value="van Dun, Wijnand">van Dun, Wijnand</option>';
+            Achternaam_options_str  += '<option value="van Eekelen">van Eekelen</option>';
+            Achternaam_options_str  += '<option value="van Eggermond weduwe">van Eggermond weduwe</option>';
+            Achternaam_options_str  += '<option value="van Est weduwe">van Est weduwe</option>';
+            Achternaam_options_str  += '<option value="van Est, Bello">van Est, Bello</option>';
+            Achternaam_options_str  += '<option value="van Est, Maria">van Est, Maria</option>';
+            Achternaam_options_str  += '<option value="van Etten">van Etten</option>';
+            Achternaam_options_str  += '<option value="van Etten, Andries">van Etten, Andries</option>';
+            Achternaam_options_str  += '<option value="van Etten, Dirk">van Etten, Dirk</option>';
+            Achternaam_options_str  += '<option value="van Etten, Niclaes">van Etten, Niclaes</option>';
+            Achternaam_options_str  += '<option value="van Etten, Simon">van Etten, Simon</option>';
+            Achternaam_options_str  += '<option value="van Gastel">van Gastel</option>';
+            Achternaam_options_str  += '<option value="van Gils, Cornelis">van Gils, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van Gils, Hendrik">van Gils, Hendrik</option>';
+            Achternaam_options_str  += '<option value="van Ginneken">van Ginneken</option>';
+            Achternaam_options_str  += '<option value="van Gogh">van Gogh</option>';
+            Achternaam_options_str  += '<option value="van Hassel">van Hassel</option>';
+            Achternaam_options_str  += '<option value="van Heemskerk">van Heemskerk</option>';
+            Achternaam_options_str  += '<option value="van Hoof">van Hoof</option>';
+            Achternaam_options_str  += '<option value="van Huyzen">van Huyzen</option>';
+            Achternaam_options_str  += '<option value="van Krinkelen">van Krinkelen</option>';
+            Achternaam_options_str  += '<option value="van Krinkelen weduwe">van Krinkelen weduwe</option>';
+            Achternaam_options_str  += '<option value="van Krinkelen, Dirk en Adriaan">van Krinkelen, Dirk en Adriaan</option>';
+            Achternaam_options_str  += '<option value="van Kuyk">van Kuyk</option>';
+            Achternaam_options_str  += '<option value="van Kuyk, Cornelis">van Kuyk, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van Kuyk, Jan">van Kuyk, Jan</option>';
+            Achternaam_options_str  += '<option value="van Maer">van Maer</option>';
+            Achternaam_options_str  += '<option value="van Maer, Jan">van Maer, Jan</option>';
+            Achternaam_options_str  += '<option value="van Meel, Frans">van Meel, Frans</option>';
+            Achternaam_options_str  += '<option value="van Meel, Roeland">van Meel, Roeland</option>';
+            Achternaam_options_str  += '<option value="van Naarssen">van Naarssen</option>';
+            Achternaam_options_str  += '<option value="van Nispen, Cornelis">van Nispen, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van Nispen, Govaerd">van Nispen, Govaerd</option>';
+            Achternaam_options_str  += '<option value="van Nispen, Maria">van Nispen, Maria</option>';
+            Achternaam_options_str  += '<option value="van Nuffel">van Nuffel</option>';
+            Achternaam_options_str  += '<option value="van Oers">van Oers</option>';
+            Achternaam_options_str  += '<option value="van Oorschot">van Oorschot</option>';
+            Achternaam_options_str  += '<option value="van Oorschot, Jan">van Oorschot, Jan</option>';
+            Achternaam_options_str  += '<option value="van Oosterhout">van Oosterhout</option>';
+            Achternaam_options_str  += '<option value="van Oosterhout, Jan">van Oosterhout, Jan</option>';
+            Achternaam_options_str  += '<option value="van Oudera">van Oudera</option>';
+            Achternaam_options_str  += '<option value="van Pelt">van Pelt</option>';
+            Achternaam_options_str  += '<option value="van Pelt, Hendrik">van Pelt, Hendrik</option>';
+            Achternaam_options_str  += '<option value="van Reuth">van Reuth</option>';
+            Achternaam_options_str  += '<option value="van Rieth">van Rieth</option>';
+            Achternaam_options_str  += '<option value="van Roozendaal">van Roozendaal</option>';
+            Achternaam_options_str  += '<option value="van Sprundel">van Sprundel</option>';
+            Achternaam_options_str  += '<option value="van Sprundel, Jacobus">van Sprundel, Jacobus</option>';
+            Achternaam_options_str  += '<option value="van Vlimmeren">van Vlimmeren</option>';
+            Achternaam_options_str  += '<option value="van Weele">van Weele</option>';
+            Achternaam_options_str  += '<option value="van Weert">van Weert</option>';
+            Achternaam_options_str  += '<option value="van Weezel">van Weezel</option>';
+            Achternaam_options_str  += '<option value="van Weezel weduwe">van Weezel weduwe</option>';
+            Achternaam_options_str  += '<option value="van Wijtvliet">van Wijtvliet</option>';
+            Achternaam_options_str  += '<option value="van Wortel">van Wortel</option>';
+            Achternaam_options_str  += '<option value="van Wortel, Sijmon">van Wortel, Sijmon</option>';
+            Achternaam_options_str  += '<option value="van Zanten">van Zanten</option>';
+            Achternaam_options_str  += '<option value="van Zoeren">van Zoeren</option>';
+            Achternaam_options_str  += '<option value="van Zoest weduwe">van Zoest weduwe</option>';
+            Achternaam_options_str  += '<option value="van Zundert, Adriaan">van Zundert, Adriaan</option>';
+            Achternaam_options_str  += '<option value="van Zundert, Cornelis">van Zundert, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van Zundert, Hendrik">van Zundert, Hendrik</option>';
+            Achternaam_options_str  += '<option value="van de Baan weduwe">van de Baan weduwe</option>';
+            Achternaam_options_str  += '<option value="van de Moer">van de Moer</option>';
+            Achternaam_options_str  += '<option value="van de Moer, Catharina">van de Moer, Catharina</option>';
+            Achternaam_options_str  += '<option value="van de Rieth">van de Rieth</option>';
+            Achternaam_options_str  += '<option value="van den Bosch">van den Bosch</option>';
+            Achternaam_options_str  += '<option value="van den Bosch, Jacobus">van den Bosch, Jacobus</option>';
+            Achternaam_options_str  += '<option value="van den Briel">van den Briel</option>';
+            Achternaam_options_str  += '<option value="van den Broek, Adriaan">van den Broek, Adriaan</option>';
+            Achternaam_options_str  += '<option value="van den Broek, Cornelis">van den Broek, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van den Eede, Cornelis">van den Eede, Cornelis</option>';
+            Achternaam_options_str  += '<option value="van den Eede, Lauwereys">van den Eede, Lauwereys</option>';
+            Achternaam_options_str  += '<option value="van den Houte">van den Houte</option>';
+            Achternaam_options_str  += '<option value="van den Houte, Hendrik">van den Houte, Hendrik</option>';
+            Achternaam_options_str  += '<option value="van der Burgt">van der Burgt</option>';
+            Achternaam_options_str  += '<option value="van der Burgt, Jan">van der Burgt, Jan</option>';
+            Achternaam_options_str  += '<option value="van der Burgt, Mattijs">van der Burgt, Mattijs</option>';
+            Achternaam_options_str  += '<option value="van der Donck">van der Donck</option>';
+            Achternaam_options_str  += '<option value="van der Eijden">van der Eijden</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Anthony">van der Heyden, Anthony</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Doomis">van der Heyden, Doomis</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Godefridus">van der Heyden, Godefridus</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Jan Antonisse">van der Heyden, Jan Antonisse</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Jan Cornelissen">van der Heyden, Jan Cornelissen</option>';
+            Achternaam_options_str  += '<option value="van der Heyden, Pieter">van der Heyden, Pieter</option>';
+            Achternaam_options_str  += '<option value="van der Kreek">van der Kreek</option>';
+            Achternaam_options_str  += '<option value="van der Kreeke">van der Kreeke</option>';
+            Achternaam_options_str  += '<option value="van der Kreeke (vrouwe">van der Kreeke (vrouwe</option>';
+            Achternaam_options_str  += '<option value="van der Kreeke, Jan">van der Kreeke, Jan</option>';
+            Achternaam_options_str  += '<option value="van der Voort">van der Voort</option>';
+            Achternaam_options_str  += '<option value="van der Westen">van der Westen</option>';
+            sel_Achternaam.innerHTML = Achternaam_options_str;
+            div_Achternaam.appendChild(sel_Achternaam);
+            var lab_Achternaam = document.createElement('div');
+            lab_Achternaam.innerHTML = 'Achternaam';
+            lab_Achternaam.className = 'filterlabel';
+            div_Achternaam.appendChild(lab_Achternaam);
+            var reset_Achternaam = document.createElement('div');
+            reset_Achternaam.innerHTML = 'clear filter';
+            reset_Achternaam.className = 'filterlabel';
+            reset_Achternaam.onclick = function() {
+                var options = document.getElementById("sel_Achternaam").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Achternaam.appendChild(reset_Achternaam);
+        resetLabels([layer_Wegen1730_nieuwcopy_1,layer_Oudendijkcopy_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_Wegen1730_nieuwcopy_1,layer_Oudendijkcopy_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_Wegen1730_nieuwcopy_1,layer_Oudendijkcopy_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_Wegen1730_nieuwcopy_1,layer_Oudendijkcopy_3]);
+        });
+        </script>
+    </body>
+</html>
